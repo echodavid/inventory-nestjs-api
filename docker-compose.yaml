@@ -2,12 +2,129 @@
 version: '3'
 
 services:
-  db:
-    image: mongo:5
+  mongo:
+    image: mongo:4.4
     restart: always
     ports:
-      - 27017:27017
+      - "27017:27017"
     environment:
       MONGO_DATABASE: inventario
     volumes:
-      - ./mongo:/data/db
+      - ./mongo-data:/data/db
+
+# version: '3'
+
+# services:
+#   mongo:
+#     image: mongo:4.4
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - ./mongo-data:/data/db
+#     command: mongod --replSet rs0 --enableMajorityReadConcern
+#     environment:
+#       - MONGO_REPL_SET_NAME=rs0
+#       - MONGO_REPL_SET_MEMBERS=localhost:27017
+
+#   mongo-init:
+#     image: mongo:4.4
+#     depends_on:
+#       - mongo
+#     command: ["mongo", "localhost:27017", "rs.initiate({ _id: 'rs0', members: [{ _id: 0, host: 'localhost:27017' }] })"]
+
+
+
+
+
+
+
+
+# version: '3'
+# services:
+#   mongo:
+#     image: mongo:4.4
+#     ports:
+#       - "27017:27017"
+#     volumes:
+#       - ./mongo:/data/db
+
+# version: '3.8'
+
+
+# services:
+#   mongo1:
+#     image: mongo:4.4
+#     command: mongod --replSet yreplica
+#     ports:
+#       - "27017:27017"
+#     # environment:
+#     #   - MONGO_INITDB_ROOT_USERNAME=root
+#     #   - MONGO_INITDB_ROOT_PASSWORD=password
+#     volumes:
+#       - ./data1:/data/db
+#     networks:
+#       - mongo-cluster
+
+#   mongo2:
+#     image: mongo:4.4
+#     command: mongod --replSet yreplica
+#     ports:
+#       - "27018:27017"
+#     # environment:
+#     #   - MONGO_INITDB_ROOT_USERNAME=root
+#     #   - MONGO_INITDB_ROOT_PASSWORD=password
+#     volumes:
+#       - ./data2:/data/db
+#     networks:
+#       - mongo-cluster
+
+#   mongo3:
+#     image: mongo:4.4
+#     command: mongod --replSet yreplica
+#     ports:
+#       - "27019:27017"
+#     # environment:
+#     #   - MONGO_INITDB_ROOT_USERNAME=root
+#     #   - MONGO_INITDB_ROOT_PASSWORD=password
+#     volumes:
+#       - ./data3:/data/db
+#     networks:
+#       - mongo-cluster
+
+#   init-replica-set:
+#     image: mongo:4.4
+#     depends_on:
+#       - mongo1
+#       - mongo2
+#       - mongo3
+#     command: 
+#       - bash
+#       - -c
+#       - |
+#         until mongo --host mongo1:27017 --eval 'db.stats()'; do
+#           echo 'Waiting for mongo1...'
+#           sleep 2
+#         done
+#         until mongo --host mongo2:27017 --eval 'db.stats()'; do
+#           echo 'Waiting for mongo2...'
+#           sleep 2
+#         done
+#         until mongo --host mongo3:27017 --eval 'db.stats()'; do
+#           echo 'Waiting for mongo3...'
+#           sleep 2
+#         done
+#         echo 'All nodes are up - initiating replica set'
+#         mongo --host mongo1:27017 --eval 'rs.initiate({
+#           _id: "yreplica",
+#           members: [
+#             {_id: 0, host: "mongo1:27017"},
+#             {_id: 1, host: "mongo2:27017"},
+#             {_id: 2, host: "mongo3:27017"}
+#           ]
+#         })'
+#     networks:
+#       - mongo-cluster
+
+# networks:
+#   mongo-cluster:
+#     driver: bridge 
