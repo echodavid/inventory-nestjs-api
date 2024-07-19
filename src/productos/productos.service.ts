@@ -190,7 +190,6 @@ export class ProductosService {
 
     const result = await this.productoModel.deleteOne({ _id: id })
     if( result.deletedCount === 0 ) {
-      console.log("asda")
       const response: NotFoundResponse = {
         message: 'Producto no encontrado',
         statusCode: ErrorCodes.notFound,

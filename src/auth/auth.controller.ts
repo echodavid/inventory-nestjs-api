@@ -1,11 +1,10 @@
-import { Controller, Get, Post, Body,UseGuards } from '@nestjs/common';
-import { AuthGuard } from '@nestjs/passport';
+import { Controller, Get, Post, Body,UseGuards, Delete, Param } from '@nestjs/common';
 
 import { CreateUserDto, LoginUserUsernameDto, LogingUserEmailDto } from './dto';
 import { AuthService } from './auth.service';
-import { User } from './entities/user.entity';
 import { ValidRolesInterface } from './interfaces';
-import { Auth, GetUser } from './decorators';
+import { Auth } from './decorators';
+import { IsMongoIdPipe } from 'src/common/pipes/IsMongo.pipe';
 
 
 @Controller('auth')
@@ -13,6 +12,7 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @Auth(ValidRolesInterface.admin, ValidRolesInterface.super)
   create(@Body() createAuthDto: CreateUserDto) {
     return this.authService.create(createAuthDto);
   }
@@ -27,19 +27,11 @@ export class AuthController {
     return this.authService.loginEmail(loginUserDto);
   }
 
-  @Get('private')
-  @Auth(ValidRolesInterface.admin, ValidRolesInterface.super)
-  private(
-    @GetUser() user: User,
-  ) {
-    console.log({user});
-    return {
-      message: 'This is a private route',
-      user: user,
-    };
+  @Delete(':id')
+  @Auth(ValidRolesInterface.super)
+  remove(@Param('id', IsMongoIdPipe) id: string) {
+    return this.authService.remove(id);
   }
-
-
 
   // @Post('login')
   // login(@Body() loginUserDto: LoginUserDto) {
@@ -61,8 +53,5 @@ export class AuthController {
   //   return this.authService.update(+id, updateAuthDto);
   // }
 
-  // @Delete(':id')
-  // remove(@Param('id') id: string) {
-  //   return this.authService.remove(+id);
-  // }
+ 
 }

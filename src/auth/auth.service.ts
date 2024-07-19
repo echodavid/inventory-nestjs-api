@@ -2,12 +2,13 @@ import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/co
 import { InjectModel } from '@nestjs/mongoose';
 import { JwtService } from '@nestjs/jwt';
 
-import { Model } from 'mongoose';
+import { Model, Schema } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 
 import { User } from './entities/user.entity';
-import { CreateUserDto, LogingUserEmailDto, LoginUserUsernameDto, UpdateUserDto } from './dto';
+import { CreateUserDto, LogingUserEmailDto, LoginUserUsernameDto } from './dto';
 import { JwtPayload } from './interfaces';
+import { ErrorCodes, NotFoundResponse } from 'src/common/const/ErrorCodes';
 
 
 
@@ -15,7 +16,7 @@ import { JwtPayload } from './interfaces';
 
 @Injectable()
 export class AuthService {
-
+  
   constructor(
 
     @InjectModel(User.name)
@@ -25,6 +26,8 @@ export class AuthService {
 
 
   ) {}
+
+  
 
   async create(createUserDto: CreateUserDto) {
     try {
@@ -93,6 +96,22 @@ export class AuthService {
     const token = this.jwtService.sign(payload);
     return token;
 
+  }
+
+  async remove(id: string) {
+    const result = await this.userModel.deleteOne({ _id: id});
+    if( result.deletedCount === 0 ) {
+      const response: NotFoundResponse = {
+        message: 'Producto no encontrado',
+        statusCode: ErrorCodes.notFound,
+        errors: {
+          notFound: [id],
+        },
+      };
+      throw new NotFoundException(response);
+    }
+
+    return
   }
 
   // findAll() {
