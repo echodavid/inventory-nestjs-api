@@ -1,4 +1,4 @@
-import { IsArray, IsBoolean, IsEmail, IsEnum, IsNotEmpty, IsString, Matches, MaxLength, MinLength, minLength } from "class-validator";
+import { IsArray, IsEmail, IsEnum, IsNotEmpty, IsString, Matches, MaxLength, MinLength } from "class-validator";
 import { ValidRolesInterface } from "../interfaces";
 
 
@@ -26,7 +26,7 @@ export class CreateUserDto {
 
     @IsArray()
     @IsEnum(ValidRolesInterface, { each: true })
-    roles: string;
+    roles: string[];
 
     @IsString()
     @IsNotEmpty({

@@ -8,7 +8,7 @@ import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { CreateUserDto, LogingUserEmailDto, LoginUserUsernameDto } from './dto';
 import { JwtPayload } from './interfaces';
-import { ErrorCodes, NotFoundResponse } from 'src/common/const/ErrorCodes';
+import { ErrorCodes, NotFoundResponse } from '../common/const/ErrorCodes';
 
 
 
@@ -112,6 +112,16 @@ export class AuthService {
     }
 
     return
+  }
+
+  async deleteAll(){
+    try{
+      const result = await this.userModel.deleteMany({});
+    }
+    catch (error) {
+      throw error;
+    }
+    return;
   }
 
   // findAll() {

@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document, Schema as SchemaType } from 'mongoose';
+
 import { Producto } from "../../productos/entities/producto.entity";
 import { EstadoVenta } from "../interfaces/validEstadoVenta.interface";
 

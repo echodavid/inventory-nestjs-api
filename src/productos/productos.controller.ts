@@ -4,8 +4,8 @@ import { ProductosService } from './productos.service';
 import { PaginationDto } from '../common/dtos/pagination.dto';
 import { IsMongoIdPipe } from '../common/pipes/IsMongo.pipe';
 import { CreateProductoDto, UpdateProductoDto } from './dto';
-import { ValidRolesInterface } from 'src/auth/interfaces';
-import { Auth } from 'src/auth/decorators';
+import { ValidRolesInterface } from '../auth/interfaces';
+import { Auth } from '../auth/decorators';
 
 @Controller('productos')
 export class ProductosController {

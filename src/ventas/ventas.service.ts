@@ -7,8 +7,8 @@ import { isMongoId } from 'class-validator';
 import { ErrorCodes, NotFoundResponse } from '../common/const/ErrorCodes';
 import { Venta } from './entities/venta.entity';
 import { CreateVentaDto, UpdateVentaDto } from './dto';
-import { PaginationDto } from 'src/common/dtos/pagination.dto';
-import { ProductosService } from 'src/productos/productos.service';
+import { PaginationDto } from '../common/dtos/pagination.dto';
+import { ProductosService } from '../productos/productos.service';
 import { EstadoVenta } from './interfaces/validEstadoVenta.interface';
 
 

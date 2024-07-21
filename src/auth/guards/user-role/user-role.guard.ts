@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import { META_ROLES } from '../../decorators/role-protected.decorator';
 import { User } from '../../entities/user.entity';
-import { ValidRolesInterface } from 'src/auth/interfaces';
+import { ValidRolesInterface } from '../../interfaces/validRoles.interface';
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {

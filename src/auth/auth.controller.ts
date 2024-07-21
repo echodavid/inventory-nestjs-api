@@ -4,7 +4,7 @@ import { CreateUserDto, LoginUserUsernameDto, LogingUserEmailDto } from './dto';
 import { AuthService } from './auth.service';
 import { ValidRolesInterface } from './interfaces';
 import { Auth } from './decorators';
-import { IsMongoIdPipe } from 'src/common/pipes/IsMongo.pipe';
+import { IsMongoIdPipe } from '../common/pipes/IsMongo.pipe';
 
 
 @Controller('auth')
@@ -33,6 +33,8 @@ export class AuthController {
     return this.authService.remove(id);
   }
 
+  
+
   // @Post('login')
   // login(@Body() loginUserDto: LoginUserDto) {
   //   return this.authService.login(loginUserDto);
@@ -53,5 +55,4 @@ export class AuthController {
   //   return this.authService.update(+id, updateAuthDto);
   // }
 
- 
 }

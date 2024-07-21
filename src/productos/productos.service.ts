@@ -1,14 +1,13 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
-
 import { InjectModel } from '@nestjs/mongoose';
-
+import { Model, Schema } from 'mongoose';
 import { isMongoId } from 'class-validator';
 
 import { Producto } from './entities/producto.entity';
 import { PaginationDto } from '../common/dtos/pagination.dto';
 import { UpdateProductoDto, CreateProductoDto } from './dto';
-import { ErrorCodes, NotFoundResponse } from 'src/common/const/ErrorCodes';
-import { Model, Schema } from 'mongoose';
+import { ErrorCodes, NotFoundResponse } from '../common/const/ErrorCodes';
+
 
 
 
@@ -201,6 +200,15 @@ export class ProductosService {
     }
 
     return
+  }
+
+  async deleteAll() {
+    try {
+      const result = await this.productoModel.deleteMany({});
+    } catch (error) {
+      throw new InternalServerErrorException('Error en la operacion');
+    }
+    return;
   }
   
 }

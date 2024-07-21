@@ -1,11 +1,13 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
+
 import { ProductosModule } from './productos/productos.module';
 import { CommonModule } from './common/common.module';
 import { VentasModule } from './ventas/ventas.module';
 import { AuthModule } from './auth/auth.module';
-import { ConfigModule } from '@nestjs/config';
 import { AppConfig } from './config/app.config';
+import { SeedModule } from './seed/seed.module';
 
 
 
@@ -30,6 +32,7 @@ import { AppConfig } from './config/app.config';
     CommonModule,
     VentasModule,
     AuthModule,
+    SeedModule,
   ],
 })
 export class AppModule {}
